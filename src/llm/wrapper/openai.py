@@ -1,7 +1,7 @@
 import os
 import openai
 
-from llm.llm_wrapper import LLMWrapper
+from llm.wrapper.llm_wrapper import LLMWrapper
 
 class OpenAIDavinci(LLMWrapper):
 
