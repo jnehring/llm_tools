@@ -41,6 +41,12 @@ Send a post request to the Dummy LLM:
 curl -X POST -d '{"doc": "hello world"}'  -H "Content-Type: application/json" http://localhost:5000/api/generate
 ```
 
+Call the dummy LLM from a remote LLM:
+
+```
+python3 -m llm.run --llm http --mode oneshot --input_str="hallo" --api_url "http://localhost:5000/api/generate"
+```
+
 **Run oneshot interaction with OpenAI Davinci**
 
 ```

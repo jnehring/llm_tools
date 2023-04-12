@@ -2,27 +2,44 @@ import argparse
 import logging
 
 from llm import llm_registry
-from llm.util import init_logging
 from llm.http_api import start_api
+
+class Application:
+
+    def __init__(self):
+        self.args = None
+
+    def get_args(self):
+
+        if self.args is None:
+            parser = argparse.ArgumentParser(prog="LLM Tools")
+            parser.add_argument('--llm', type=str, required=True, help="Specify which LLM you want to load.")
+            parser.add_argument('--input_str', type=str, help="Specify input document. For mode=oneshot.")
+            parser.add_argument('--mode', default="oneshot", choices=["http_api", "oneshot"])
+            parser.add_argument('--log_level', default="warning", choices=["info", "warning"])
+            parser.add_argument('--api_url', type=str)
+            self.args = parser.parse_args()
+        return self.args
+
+    def init_logging(self, args):
+        level = logging.WARNING
+        if args.log_level == "info":
+            level = logging.INFO
+
+        logging.basicConfig(format='%(levelname)s:%(message)s', level=level)
 
 def run_console():
 
-    parser = argparse.ArgumentParser(prog="LLM Tools")
-    parser.add_argument('--llm', type=str, required=True, help="Specify which LLM you want to load.")
-    parser.add_argument('--input_str', type=str, help="Specify input document. For mode=oneshot.")
-    parser.add_argument('--mode', default="oneshot", choices=["http_api", "oneshot"])
-    parser.add_argument('--log_level', default="warning", choices=["info", "warning"])
-
-    args = parser.parse_args()
-
-    init_logging(args)
+    app = Application()
+    args = app.get_args()
+    app.init_logging(args)
 
     logging.info("loading llm " + args.llm)
 
     if args.llm not in llm_registry.get_llms():
         raise Exception("Unknown LLM " + args.llm)
     
-    llm = llm_registry.load_llm(args.llm)
+    llm = llm_registry.load_llm(app, args.llm)
 
     if args.mode == "oneshot":
         if args.input_str is None:
