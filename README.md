@@ -40,3 +40,10 @@ Send a post request to the Dummy LLM:
 ```
 curl -X POST -d '{"doc": "hello world"}'  -H "Content-Type: application/json" http://localhost:5000/api/generate
 ```
+
+**Run oneshot interaction with OpenAI Davinci**
+
+```
+export OPENAI_API_KEY=...
+python3 -m llm.run --llm openai_davinci --mode http_api
+```
