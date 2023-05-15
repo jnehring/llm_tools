@@ -3,6 +3,7 @@ import logging
 
 from llm import llm_registry
 from llm.http_api import start_api
+from llm.web_service import start_service
 
 class Application:
 
@@ -15,7 +16,7 @@ class Application:
             parser = argparse.ArgumentParser(prog="LLM Tools")
             parser.add_argument('--llm', type=str, required=True, help="Specify which LLM you want to load.")
             parser.add_argument('--input_str', type=str, help="Specify input document. For mode=oneshot.")
-            parser.add_argument('--mode', default="oneshot", choices=["http_api", "oneshot"])
+            parser.add_argument('--mode', default="oneshot", choices=["http_api", "oneshot", "web_service"])
             parser.add_argument('--log_level', default="warning", choices=["info", "warning"])
             parser.add_argument('--api_url', type=str)
             self.args = parser.parse_args()
@@ -49,6 +50,8 @@ def run_console():
         print(response)
     elif args.mode == "http_api":
         start_api(llm, args)
+    elif args.mode == "web_service":
+        start_service(llm, args)
 
 if __name__ == "__main__":
     run_console()
