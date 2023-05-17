@@ -1,4 +1,5 @@
 import logging
+import json
 
 from flask import Flask
 from flask import request
@@ -17,7 +18,13 @@ def start_api(llm, args):
         data = request.json
         logging.info("Receive request with data=" + str(data))
         response = llm.generate_response(input_str=data["doc"])
-        logging.info("Received answer: " + response)
-        return response
+
+        response = {
+            "input_doc": data["doc"],
+            "response": response
+        }
+
+        logging.info("Received answer: " + json.dumps(response))
+        return json.dumps(response, indent=4)
 
     app.run()
