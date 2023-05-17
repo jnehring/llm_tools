@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Dialog Model</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}">
+    <script src="{{ url_for('static', filename='script/controller.js') }}">
+    </script>
+</head>
+<body>
+    
+    <!-- HTML comment -->
+    <h1>
+        LLM Tools
+    </h1>
+
+    <div class="topleft">
+        <img src="https://www.dfki.de/fileadmin/user_upload/DFKI/Medien/Logos/Logos_DFKI/DFKI_Logo.png" >
+    </div>
+
+    <br>
+
+        <table>
+            <tr>
+
+                <form action="" method="post">
+                    <td><textarea class="form" name="multiline_txt">{{ user_text }}</textarea></td>
+                    <td><input class="form" type="submit" value="SEND" id="send_btn"></td>
+                </form>
+                
+            </tr>
+            <tr>
+                <td colspan="2"><br></td>
+            </tr>
+            
+            <tr>
+                <td colspan="2" class="white-box">
+                    
+                            {{ llm_text }}
+                        
+                </td>
+            </tr>
+    </table>
+
+    <br>
+
+</body>
+</html>
