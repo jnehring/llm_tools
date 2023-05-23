@@ -47,7 +47,7 @@ Call the dummy LLM from a remote LLM:
 python3 -m llm.run --llm http --mode oneshot --input_str="hallo" --api_url "http://localhost:5000/api/generate"
 ```
 
-**Run oneshot interaction with OpenAI Davinci**
+**HTTP API interaction with OpenAI Davinci**
 
 ```
 export OPENAI_API_KEY=...
