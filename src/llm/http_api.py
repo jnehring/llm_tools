@@ -16,7 +16,6 @@ def start_api(llm, args):
     @cross_origin()
     def generate():
         data = request.json
-        print(data)
         logging.info("Receive request with data=" + str(data))
         response = llm.generate_response(input_str=data["doc"])
 
