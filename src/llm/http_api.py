@@ -2,7 +2,7 @@ import logging
 import json
 
 from flask import Flask
-from flask import request
+from flask import request, render_template
 from flask_cors import CORS, cross_origin
 
 
@@ -26,5 +26,9 @@ def start_api(llm, args):
 
         logging.info("Received answer: " + json.dumps(response))
         return json.dumps(response, indent=4)
+    
+    @app.route("/", methods=['GET'])
+    def index():
+        return render_template("index.html")
 
-    app.run()
+    app.run(debug=True)

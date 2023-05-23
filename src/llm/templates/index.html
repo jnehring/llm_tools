@@ -2,7 +2,8 @@
 <html>
 <head>
     <meta charset="UTF-8">
-    <title>Dialog Model</title>
+    <title>LLM Tools</title>
+    <link rel="shortcut icon" href="https://www.dfki.de/typo3conf/ext/wftmpl_dfki/Resources/Public/Images/favicon.ico" type="image/vnd.microsoft.icon">
     <link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}">
     <script src="{{ url_for('static', filename='script/controller.js') }}">
     </script>
@@ -22,21 +23,19 @@
 
         <table>
             <tr>
-
-                <form action="" method="post">
-                    <td><textarea class="form" name="multiline_txt">{{ user_text }}</textarea></td>
-                    <td><input class="form" type="submit" value="SEND" id="send_btn"></td>
-                </form>
-                
+                    <td><textarea class="form" id="input_txt"></textarea></td>
+                    <td class="btn_grp">
+                        <button class = "form" id="send_btn" onclick="sendData()"> SEND </button>
+                        <button class = "form" id="clear_btn" onclick="clearData()"> CLEAR </button>
+                    </td>
             </tr>
+
             <tr>
                 <td colspan="2"><br></td>
             </tr>
             
             <tr>
-                <td colspan="2" class="white-box">
-                    
-                            {{ llm_text }}
+                <td colspan="2" class="white-box" id="display_txt">
                         
                 </td>
             </tr>
