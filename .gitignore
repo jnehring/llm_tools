@@ -1,4 +1,5 @@
 .DS_Store
+.vscode
 
 setup_env.sh
 
