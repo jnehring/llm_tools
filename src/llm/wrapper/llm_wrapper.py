@@ -26,7 +26,7 @@ class DummyLLM(LLMWrapper):
 
 class OpenAIDavinci(LLMWrapper):
 
-    def generate_response(self, input_str : str, max_tokens : int =10 , temperature : float = 0):
+    def generate_response(self, input_str : str, max_tokens : int =500 , temperature : float = 0):
         openai.api_key = os.getenv("OPENAI_API_KEY")
         response = openai.Completion.create(
             model="text-davinci-003",
@@ -34,7 +34,8 @@ class OpenAIDavinci(LLMWrapper):
             max_tokens=max_tokens,
             temperature=temperature
         )
-        return response["choices"][0]["text"]
+        # using lstrip() to remove leading newline charcters
+        return response["choices"][0]["text"].lstrip()
 
 class RemoteHTTPLLM(LLMWrapper):
 
