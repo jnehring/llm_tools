@@ -17,7 +17,7 @@ llm_registry = {
     "openai_davinci": lambda app : OpenAIDavinci(),
     "dummy_llm": lambda app : DummyLLM(),
     "llama-7b": lambda app : load_llama("7B"),
-    "pythia": lambda app : load_pythia(),
+    "pythia-6.9b": lambda app : load_pythia(),
     "http": init_remote_http_llm
 }
 
