@@ -18,6 +18,7 @@ class Application:
             parser.add_argument('--mode', default="oneshot", choices=["http_api", "oneshot"])
             parser.add_argument('--log_level', default="warning", choices=["info", "warning"])
             parser.add_argument('--api_url', type=str)
+            parser.add_argument('--port', type=int, default=5000)
             self.args = parser.parse_args()
         return self.args
 
