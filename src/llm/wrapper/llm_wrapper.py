@@ -34,8 +34,7 @@ class OpenAIDavinci(LLMWrapper):
             max_tokens=max_tokens,
             temperature=temperature
         )
-        # using lstrip() to remove leading newline charcters
-        return response["choices"][0]["text"].lstrip()
+        return response["choices"][0]["text"]
 
 class RemoteHTTPLLM(LLMWrapper):
 
