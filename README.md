@@ -69,7 +69,7 @@ There is a Web user interface available to interact with llm.
 Start the HTTP API with any desired llm. This will also start the service of web interface.
 You can open web UI through your browser using local IP (127.0.0.1:5000).
 The web UI looks like this.
-![WebUI](https://github.com/jnehring/llm_tools/assets/94236355/05a6badd-4d8f-4f8d-b6fc-b3313b6742dc)
+![WebUI](https://github.com/jnehring/llm_tools/assets/94236355/95dc2a42-7eb9-417b-a25a-60d5e8454205)
 You can type in any text in the textbox that you want to sent to llm and press send. 
 The result will be displayed in the lower white box.
 ```
