@@ -3,6 +3,7 @@ import numpy as np
 import os
 import openai
 import requests
+import json
 
 class LLMWrapper(ABC):
 
@@ -45,3 +46,29 @@ class RemoteHTTPLLM(LLMWrapper):
         doc = {"doc": input_str}
         x = requests.post(self.api_url, json = doc)
         return x.text
+    
+class OPENGPTX(LLMWrapper):
+
+    def __init__(self):
+        self.lastResponse = None
+
+    def generate_response(self, input_str : str, max_tokens : int = 64, temperature : float = 0):
+
+        headers = {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json'
+        }
+        
+        post_data = {
+            "inputs": input_str,
+            "seed": 1,
+            "parameters": {
+                "sample_or_greedy": "greedy",
+                "max_new_tokens": max_tokens,
+            },
+            "last_response": self.lastResponse,
+        }
+
+        x = requests.post("https://opengptx.dfki.de/generate", headers=headers, data = json.dumps(post_data))
+        self.lastResponse = x.json()["output_text"]
+        return (x.json()["output_text"])
