@@ -1,4 +1,4 @@
-from llm.wrapper.llm_wrapper import LLMWrapper, DummyLLM, OpenAIDavinci, RemoteHTTPLLM
+from llm.wrapper.llm_wrapper import LLMWrapper, DummyLLM, OpenAIDavinci, RemoteHTTPLLM, OPENGPTX
 
 def load_llama(size):
     from llm.wrapper.llama.llama_wrapper import LLamaWrapper
@@ -18,7 +18,8 @@ llm_registry = {
     "dummy_llm": lambda app : DummyLLM(),
     "llama-7b": lambda app : load_llama("7B"),
     "pythia-6.9b": lambda app : load_pythia(),
-    "http": init_remote_http_llm
+    "http": init_remote_http_llm,
+    "opengpt-x": lambda app : OPENGPTX()
 }
 
 def load_llm(app, llm_name):
