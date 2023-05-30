@@ -57,8 +57,10 @@ python3 -m llm.run --llm openai_davinci --mode http_api
 **Adding a new LLM to llm_tools**
 
 ```
-Inside llm_registry.py file, add a new entry to the llm_registry dictionary, mapping a unique name for your LLM to a lambda function that creates an instance of your LLM class.
-Inside my_llm.py, define a class that inherits from the LLMWrapper abstract class. This class will represent your LLM implementation.
+Inside llm_registry.py file, add a new entry to the llm_registry dictionary, 
+mapping a unique name for your LLM to a lambda function that creates an instance of your LLM class.
+Inside my_llm.py, define a class that inherits from the LLMWrapper abstract class. 
+This class will represent your LLM implementation.
 You have successfully added a new LLM to the llm_tools.
 ```
 
@@ -68,8 +70,7 @@ You have successfully added a new LLM to the llm_tools.
 There is a Web user interface available to interact with llm.
 Start the HTTP API with any desired llm. This will also start the service of web interface.
 You can open web UI through your browser using local IP (127.0.0.1:5000).
-The web UI looks like this.
-![WebUI](https://github.com/jnehring/llm_tools/assets/94236355/05a6badd-4d8f-4f8d-b6fc-b3313b6742dc)
 You can type in any text in the textbox that you want to sent to llm and press send. 
 The result will be displayed in the lower white box.
 ```
+![WebUI](https://github.com/jnehring/llm_tools/assets/94236355/05a6badd-4d8f-4f8d-b6fc-b3313b6742dc)
