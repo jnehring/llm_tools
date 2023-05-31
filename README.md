@@ -32,7 +32,7 @@ python3 -m llm.run --llm dummy_llm --mode oneshot --input_str="hallo"
 **Start the HTTP API with the Dummy LLM** 
 
 ```
-python3 -m llm.run --llm dummy_llm --mode http_api
+python3 -m llm.run --mode http_api --llm dummy_llm
 ```
 
 Send a post request to the Dummy LLM:
