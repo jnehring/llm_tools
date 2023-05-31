@@ -12,6 +12,10 @@ def load_t5(app):
     from llm.wrapper.t5.t5_wrapper import T5Wrapper
     return T5Wrapper(app)
 
+def load_vicuna(app):
+    from llm.wrapper.vicuna.vicuna_wrapper import VicunaWrapper
+    return VicunaWrapper(app)
+
 def init_remote_http_llm(app):
     if "api_url" not in app.get_args():
         raise Exception("--url parameter not set.")
@@ -20,11 +24,12 @@ def init_remote_http_llm(app):
 llm_registry = {
     "openai_davinci": lambda app : OpenAIDavinci(),
     "dummy_llm": lambda app : DummyLLM(),
-    "llama-7b": lambda app : load_llama("7B"),
+    "llama": lambda app : load_llama("7B"),
     "automodel": lambda app : load_automodel(app),
     "t5": lambda app : load_t5(app),
     "http": lambda app : init_remote_http_llm(app),
-    "opengpt-x": lambda app : OPENGPTX()
+    "opengpt-x": lambda app : OPENGPTX(),
+    "vicuna": lambda app : load_vicuna(app)
 }
 
 def load_llm(app, llm_name):

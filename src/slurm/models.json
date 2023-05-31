@@ -15,10 +15,16 @@
         } 
     },
     "llama7b": {
-        "llm": "llama-7b",
+        "llm": "llama",
         "env": {
-            "MODEL_PATH": "/ds/models/llms/vicuna/13B",
             "LLAMA_CHECKPOINT_DIR": "/ds/models/llms/llama/7B/",
+            "LLAMA_TOKENIZER_PATH": "/ds/models/llms/llama/tokenizer.model"
+        } 
+    },
+    "llama13b": {
+        "llm": "llama",
+        "env": {
+            "LLAMA_CHECKPOINT_DIR": "/ds/models/llms/llama/13B/",
             "LLAMA_TOKENIZER_PATH": "/ds/models/llms/llama/tokenizer.model"
         } 
     }
