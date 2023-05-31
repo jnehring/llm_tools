@@ -68,7 +68,7 @@ You have successfully added a new LLM to the llm_tools.
 
 ```
 There is a Web user interface available to interact with llm.
-Start the HTTP API with any desired llm. This will also start the service of web interface.
+Start the HTTP API with any desired llm using the --http_api parameter. This will also start the service of web interface.
 You can open web UI through your browser using local IP (127.0.0.1:5000).
 You can type in any text in the textbox that you want to sent to llm and press send. 
 The result will be displayed in the lower white box.
