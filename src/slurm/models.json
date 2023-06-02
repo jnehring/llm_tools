@@ -1,0 +1,31 @@
+{
+    "pythia6_9b": {
+        "llm": "automodel",
+        "huggingface-model": "EleutherAI/pythia-6.9b"
+    },
+    "pythia12b": {
+        "llm": "automodel",
+        "huggingface-model": "EleutherAI/pythia-12b"
+    },
+    "vicuna13b": {
+        "llm": "vicuna",
+        "env": {
+            "MODEL_PATH": "/ds/models/llms/vicuna/13B",
+            "LLAMA_TOKENIZER_PATH": "/ds/models/llms/llama/tokenizer.model"
+        } 
+    },
+    "llama7b": {
+        "llm": "llama",
+        "env": {
+            "LLAMA_CHECKPOINT_DIR": "/ds/models/llms/llama/7B/",
+            "LLAMA_TOKENIZER_PATH": "/ds/models/llms/llama/tokenizer.model"
+        } 
+    },
+    "llama13b": {
+        "llm": "llama",
+        "env": {
+            "LLAMA_CHECKPOINT_DIR": "/ds/models/llms/llama/13B/",
+            "LLAMA_TOKENIZER_PATH": "/ds/models/llms/llama/tokenizer.model"
+        } 
+    }
+}

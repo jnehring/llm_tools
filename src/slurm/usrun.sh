@@ -1,7 +1,7 @@
 #!/bin/sh
 
 # start the dialogpt enroot container on the cluster
-IMAGE=/netscratch/enroot/nvcr.io_nvidia_pytorch_22.03-py3.sqsh
+IMAGE=/netscratch/enroot/nvcr.io_nvidia_pytorch_23.05-py3.sqsh
 
 srun -K \
   --container-mounts=/netscratch:/netscratch,/ds:/ds,$HOME:$HOME \
