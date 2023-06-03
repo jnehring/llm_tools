@@ -63,7 +63,7 @@ class OPENGPTX(LLMWrapper):
             "inputs": input_str,
             "seed": 1,
             "parameters": {
-                "sample_or_greedy": "greedy",
+                "sample_or_greedy": "sample",
                 "max_new_tokens": max_tokens,
             },
             "last_response": self.lastResponse,
