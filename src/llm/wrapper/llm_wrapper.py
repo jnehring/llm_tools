@@ -4,36 +4,70 @@ import os
 import openai
 import requests
 import json
+from typing import Dict
+import logging
 
 class LLMWrapper(ABC):
 
+    def __init__(self):
+        self.params = {
+            "max_new_tokens": lambda x : int(x),
+            "temperature": lambda x: float(x)
+        }
+
     @abstractmethod
-    def generate_response(self, input_str : str, max_tokens : int=10 , temperature : float = 0):
+    def generate_response(self, input_str : str, args : Dict):
         pass
+
+    def clean_args(self, args):
+        # remove args that are not defined in self.params
+        valid_keys = filter(lambda x : x in self.params.keys(), args.keys())
+        args = {key: args[key] for key in valid_keys}
+        # get args
+        args = {key: self.params[key](value) for key, value in args.items()}
+        return args
+
+class HuggingFaceLLMWrapper(LLMWrapper):
+
+    def __init__(self):
+        LLMWrapper.__init__(self)
+
+    def generate_response(self, input_str : str, args : Dict):
+        clean_args = self.clean_args(args)
+        inputs = self.tokenizer(input_str, return_tensors="pt")
+        for key, value in clean_args.items():
+            inputs[key] = value
+        tokens = self.model.generate(**inputs)
+        return self.tokenizer.decode(tokens[0])
 
 class DummyLLM(LLMWrapper):
 
     def __init__(self):
+        LLMWrapper.__init__(self)
         self.responses = [
             "Hello, I am the Dummy LLM.",
             "I say random stuff.",
             "I am the smartest LLM of all."
         ]
-        
-    def generate_response(self, input_str : str, max_tokens : int =10 , temperature : float = 0):
+
+    def generate_response(self, input_str : str, args):
+        args = self.clean_args(args)
         response = np.random.choice(self.responses)
-        response += "\n\nYour input was: " + input_str
+        response += "\n\nYour input was: " + input_str + "\n, the arguments were " + str(args)
         return response
 
 class OpenAIDavinci(LLMWrapper):
 
-    def generate_response(self, input_str : str, max_tokens : int =500 , temperature : float = 0):
+    def __init__(self):
+        LLMWrapper.__init__(self)
+
+    def generate_response(self, input_str : str, args):
         openai.api_key = os.getenv("OPENAI_API_KEY")
         response = openai.Completion.create(
             model="text-davinci-003",
             prompt=input_str,
-            max_tokens=max_tokens,
-            temperature=temperature
+            max_tokens=args["max_new_tokens"],
+            temperature=args["temperature"]
         )
         return response["choices"][0]["text"]
 
@@ -42,7 +76,7 @@ class RemoteHTTPLLM(LLMWrapper):
     def __init__(self, api_url):
         self.api_url = api_url
 
-    def generate_response(self, input_str : str, max_tokens : int =10 , temperature : float = 0):
+    def generate_response(self, input_str : str, args):
         doc = {"doc": input_str}
         x = requests.post(self.api_url, json = doc)
         return x.text
@@ -50,9 +84,10 @@ class RemoteHTTPLLM(LLMWrapper):
 class OPENGPTX(LLMWrapper):
 
     def __init__(self):
+        LLMWrapper.__init__(self)
         self.lastResponse = None
 
-    def generate_response(self, input_str : str, max_tokens : int = 64, temperature : float = 0):
+    def generate_response(self, input_str : str, args):
 
         headers = {
         'Accept': 'application/json',
@@ -64,7 +99,7 @@ class OPENGPTX(LLMWrapper):
             "seed": 1,
             "parameters": {
                 "sample_or_greedy": "greedy",
-                "max_new_tokens": max_tokens,
+                "max_new_tokens": args["max_new_tokens"],
             },
             "last_response": self.lastResponse,
         }

@@ -5,7 +5,6 @@ from flask import Flask
 from flask import request, render_template
 from flask_cors import CORS, cross_origin
 
-
 def start_api(llm, args):
 
     app = Flask(__name__)
@@ -17,7 +16,8 @@ def start_api(llm, args):
     def generate():
         data = request.json
         logging.info("Receive request with data=" + str(data))
-        response = llm.generate_response(input_str=data["doc"])
+
+        response = llm.generate_response(data["doc"], request.args)
 
         response = {
             "input_doc": data["doc"],
