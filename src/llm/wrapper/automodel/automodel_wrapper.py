@@ -1,10 +1,11 @@
-from llm.wrapper.llm_wrapper import LLMWrapper
+from llm.wrapper.llm_wrapper import HuggingFaceLLMWrapper
 from transformers import AutoModelForCausalLM, AutoTokenizer
 import os
 
-class AutoModelWrapper(LLMWrapper):
+class AutoModelWrapper(HuggingFaceLLMWrapper):
 
     def __init__(self, app):
+        HuggingFaceLLMWrapper.__init__(self)
 
         assert app.get_args().huggingface_model is not None
 
@@ -19,12 +20,3 @@ class AutoModelWrapper(LLMWrapper):
             model_name,
             cache_dir=os.getenv("HUGGINGFACE_CACHE_DIR")
         )
-
-    def generate_response(self, input_str : str):
-        inputs = self.tokenizer(input_str, return_tensors="pt")
-        tokens = self.model.generate(**inputs)
-        return self.tokenizer.decode(tokens[0])
-
-
-
-

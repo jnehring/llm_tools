@@ -16,7 +16,7 @@ class Application:
             parser.add_argument('--llm', type=str, required=True, help="Specify which LLM you want to load.")
             parser.add_argument('--huggingface_model', type=str, required=False, help="When llm=transformers, specify the huggingface model here.")
             parser.add_argument('--input_str', type=str, help="Specify input document. For mode=oneshot.")
-            parser.add_argument('--mode', default="oneshot", choices=["http_api", "oneshot"])
+            parser.add_argument('--mode', default="http_api", choices=["http_api", "oneshot"])
             parser.add_argument('--log_level', default="warning", choices=["info", "warning"])
             parser.add_argument('--api_url', type=str)
             parser.add_argument('--port', type=int, default=5000)
@@ -29,7 +29,7 @@ class Application:
         if args.log_level == "info":
             level = logging.INFO
 
-        logging.basicConfig(format='%(levelname)s:%(message)s', level=level)
+        logging.basicConfig(format='%(levelname)s:%(message)s', level=level, filename="log.txt")
 
 def run_console():
 
