@@ -65,7 +65,7 @@ textarea:focus {
 
     background: rgba(255,255,255);
     margin: 20px 20px 20px 20px;
-    height: 50px;
+    height: 80px;
     border: none;
     border-radius: 10px;
     padding: 10px;
@@ -76,3 +76,40 @@ textarea:focus {
     max-width: 1px;
     white-space: pre-wrap;
 }
+
+.loader-container {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    display: none; /* By default it is hidden */
+    align-items: center;
+    justify-content: center;
+    background-color: rgba(255, 255, 255, 0.8); /* Semi-transparent background */
+    z-index: 9999;
+    margin-top: -80px;
+  }
+
+
+/* Style the loading icon */
+.loader {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    border: 5px solid #f3f3f3; /* Light grey */
+    border-top: 5px solid #3498db; /* Blue */
+    animation: spin 1s linear infinite;
+  }
+
+ /* Animation for spinning the loading icon */
+ @keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+  }
+  
+  /* Hide the page content when disabled */
+  .disabled {
+    pointer-events: none;
+    opacity: 0.5;
+  }
