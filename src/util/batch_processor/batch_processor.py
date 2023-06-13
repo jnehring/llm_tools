@@ -35,7 +35,7 @@ def batch_process(api, file_in, file_out):
     print(f"Processed {df.shape[0]} rows in {timer:.4} seconds. ({df.shape[0]/timer:.4} rows/second)")
     print(f"Saved results into {file_out}")
 
-    
+
 if __name__ == "__main__":
     ap = argparse.ArgumentParser(prog="batch_processor",
                                  description="Process a csv data in api")
@@ -48,4 +48,7 @@ if __name__ == "__main__":
     api = "http://localhost:5000/api/generate" if args.api is None else args.api
     file_in = "input.csv" if args.input is None else args.input
     file_out = "output.csv" if args.output is None else args.output
-    batch_process(api, file_in, file_out)
+    try:
+        batch_process(api, file_in, file_out)
+    except KeyboardInterrupt:
+        pass
