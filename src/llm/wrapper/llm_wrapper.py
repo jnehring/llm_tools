@@ -65,12 +65,20 @@ class OpenAIDavinci(LLMWrapper):
 
     def generate_response(self, input_str : str, args):
         openai.api_key = os.getenv("OPENAI_API_KEY")
-        response = openai.Completion.create(
-            model="text-davinci-003",
-            prompt=input_str,
-            max_tokens=args["max_new_tokens"],
-            temperature=args["temperature"]
-        )
+
+        openai_args = {
+            "model": "text-davinci-003",
+            "prompt": input_str,
+        }
+
+        if "max_new_tokens" in args.keys():
+            openai_args["max_tokens"] = args["max_new_tokens"]
+
+        if "temperature" in args.keys():
+            openai_args["temperature"] = args["temperature"]
+
+
+        response = openai.Completion.create(**openai_args)
         return response["choices"][0]["text"]
 
 class RemoteHTTPLLM(LLMWrapper):
@@ -100,8 +108,8 @@ class OPENGPTX(LLMWrapper):
             "inputs": input_str,
             "seed": 1,
             "parameters": {
-                "sample_or_greedy": "greedy",
-                "max_new_tokens": args["max_new_tokens"],
+                "sample_or_greedy": "sample",
+                "max_new_tokens": args["max_new_tokens"]
             },
             "last_response": self.lastResponse,
         }

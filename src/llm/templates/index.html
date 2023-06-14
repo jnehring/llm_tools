@@ -20,26 +20,31 @@
     </div>
 
     <br>
+    <br>
+    <br>
+    <br>
+    <br>
 
-        <table>
-            <tr>
-                    <td><textarea class="form" id="input_txt"></textarea></td>
-                    <td class="btn_grp">
-                        <button class = "form" id="send_btn" onclick="sendData()"> SEND </button>
-                        <button class = "form" id="clear_btn" onclick="clearData()"> CLEAR </button>
-                    </td>
-            </tr>
+     <table>
+         <tr>
+                 <td><textarea class="form" id="input_txt" placeholder="Please enter your text here ..."></textarea></td>
+                 <td class="btn_grp">
+                     <button class = "form" id="send_btn" onclick="sendData()"> SEND </button>
+                     <button class = "form" id="clear_btn" onclick="clearData()"> CLEAR </button>
+                 </td>
+         </tr>
+         
+         <tr><td></td></tr> 
+         <tr><td></td></tr>
+         
+         <tr>
+             <td colspan="2" class="white-box" id="display_txt"> </td>
+         </tr>
+     </table>
 
-            <tr>
-                <td colspan="2"><br></td>
-            </tr>
-            
-            <tr>
-                <td colspan="2" class="white-box" id="display_txt">
-                        
-                </td>
-            </tr>
-    </table>
+    <div id="loader-container" class="loader-container">
+        <div class = "loader"></div>
+    </div>
 
     <br>
 
