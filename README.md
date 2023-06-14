@@ -64,7 +64,7 @@ This class will represent your LLM implementation.
 You have successfully added a new LLM to the llm_tools.
 ```
 
-**llm_tools web user interface**
+# llm_tools web user interface
 
 ```
 There is a Web user interface available to interact with llm.
