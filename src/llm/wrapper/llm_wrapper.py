@@ -35,6 +35,8 @@ class HuggingFaceLLMWrapper(LLMWrapper):
     def generate_response(self, input_str : str, args : Dict):
         clean_args = self.clean_args(args)
         inputs = self.tokenizer(input_str, return_tensors="pt")
+        for key in inputs.keys():
+            inputs[key] = inputs[key].cuda()
         for key, value in clean_args.items():
             inputs[key] = value
         tokens = self.model.generate(**inputs)

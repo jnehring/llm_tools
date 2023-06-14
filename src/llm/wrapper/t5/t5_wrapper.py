@@ -1,5 +1,5 @@
 from llm.wrapper.llm_wrapper import HuggingFaceLLMWrapper
-from transformers import T5Tokenizer, T5Model
+from transformers import T5Tokenizer, T5Model, T5ForConditionalGeneration
 import os
 
 class T5Wrapper(HuggingFaceLLMWrapper):
@@ -13,7 +13,13 @@ class T5Wrapper(HuggingFaceLLMWrapper):
 
         model_name= app.get_args().huggingface_model
 
-        assert model_name in ("t5-base")
+        # assert model_name in ("t5-base")
         self.tokenizer = T5Tokenizer.from_pretrained(model_name, cache_dir=cache_dir)
-        self.model = T5Model.from_pretrained(model_name, cache_dir=cache_dir)
+        if model_name in ("t5-base"):
+            self.model = T5Model.from_pretrained(model_name, cache_dir=cache_dir).cuda()
+        elif model_name in ("google/flan-t5-large"):
+            self.model = T5ForConditionalGeneration.from_pretrained(model_name, cache_dir=cache_dir).cuda()
+
+
+        
 

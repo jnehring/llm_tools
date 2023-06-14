@@ -14,18 +14,37 @@
             "LLAMA_TOKENIZER_PATH": "/ds/models/llms/llama/tokenizer.model"
         } 
     },
+    "vicuna7b": {
+        "llm": "vicuna",
+        "env": {
+            "MODEL_PATH": "/ds/models/llms/vicuna/7B",
+            "LLAMA_TOKENIZER_PATH": "/ds/models/llms/llama/tokenizer.model"
+        } 
+    },
+    "flan_t5_large": {
+        "llm": "t5",
+        "huggingface_model": "google/flan-t5-large"
+    },
+    "t5_base": {
+        "llm": "t5",
+        "huggingface_model": "t5-base"
+    },
     "llama7b": {
         "llm": "llama",
         "env": {
             "LLAMA_CHECKPOINT_DIR": "/ds/models/llms/llama/7B/",
-            "LLAMA_TOKENIZER_PATH": "/ds/models/llms/llama/tokenizer.model"
+            "LLAMA_TOKENIZER_PATH": "/ds/models/llms/llama/tokenizer.model",
+            "WORLD_SIZE": 1,
+            "LOCAL_RANK": 0
         } 
     },
     "llama13b": {
         "llm": "llama",
         "env": {
             "LLAMA_CHECKPOINT_DIR": "/ds/models/llms/llama/13B/",
-            "LLAMA_TOKENIZER_PATH": "/ds/models/llms/llama/tokenizer.model"
-        } 
+            "LLAMA_TOKENIZER_PATH": "/ds/models/llms/llama/tokenizer.model",
+            "WORLD_SIZE": 1,
+            "LOCAL_RANK": 0
+        }
     }
 }
