@@ -1,3 +1,10 @@
+## Table of contents
+- [LLM Tools](#llm-tools)
+  - [Installation](#installation)
+  - [Usage](#usage)
+- [llm\_tools web user interface](#llm_tools-web-user-interface)
+- [batch\_processor](#batch_processor)
+  - [Usage](#usage-1)
 # LLM Tools
 
 ## Installation
