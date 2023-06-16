@@ -74,3 +74,39 @@ You can type in any text in the textbox that you want to sent to llm and press s
 The result will be displayed in the lower white box.
 ```
 ![WebUI](https://github.com/jnehring/llm_tools/assets/94236355/05a6badd-4d8f-4f8d-b6fc-b3313b6742dc)
+
+# batch_processor
+Tool for processing CSV files with llm. 
+## Usage
+Help:
+```
+$ python batch_processor.py --help
+usage: batch_processor [-h] [--api API] [-i INPUT_FILE] [-o OUTPUT_FILE] [-ic INPUT_COLUMN] [-oc OUTPUT_COLUMN]
+
+Process a csv data in api
+
+options:
+  -h, --help            show this help message and exit
+  --api API             API URL
+  -i INPUT_FILE, --input_file INPUT_FILE
+                        input file path
+  -o OUTPUT_FILE, --output_file OUTPUT_FILE
+                        output file path
+  -ic INPUT_COLUMN, --input_column INPUT_COLUMN
+                        name of the input data column
+  -oc OUTPUT_COLUMN, --output_column OUTPUT_COLUMN
+                        name of the output data column
+```
+Each entry in an INPUT_COLUMN (default = 'input') of INPUT_FILE (default = 'input.csv') will be sent to API.
+
+Output file (OUTPUT_FILE, default = 'output.csv) is a copy of an input file with a new column OUTPUT_COLUMN (default = 'output') which contains API responses. 
+
+If input file already has an 'output' column - only rows with empty output will be processed. Processing may be interrupted(via CTRL+C in UNIX) at any point and continued later by using an output file as an input. 
+
+Example usage
+```
+$ python3.11 batch_processor.py -i output.csv
+processing output.csv: 100%|########################################| 60/60 [00:00<00:00, 673.91rows/s]
+Processed 60 rows in 0.08912 seconds. (673.3 rows/second)
+Saved results into output.csv
+```

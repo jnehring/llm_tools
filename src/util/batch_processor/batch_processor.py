@@ -35,7 +35,7 @@ def batch_process(args):
         pbar.close()
     
     timer = pbar.format_dict["elapsed"]
-    print(f"Processed {processed} documents in {timer:.4} seconds. ({processed/timer:.4} documents/second)")
+    print(f"Processed {processed} rows in {timer:.4} seconds. ({processed/timer:.4} rows/second)")
     print(f"Saved results into {args.output_file}")
 
 
