@@ -15,25 +15,27 @@ def batch_process(args):
     
     df = pd.read_csv(args.input_file, dtype=str)
     if args.input_column not in df.columns:
-        raise ValueError("Input csv must have an 'input' column")
-    
+        raise ValueError(f"Input csv must have an {args.input_column} column")
     # Create a column if it doesn't exist already
     df[args.output_column] = df.get(args.output_column, None) 
-    with tqdm(df.itertuples(), total = df.shape[0], ascii=True, desc=f"processing {args.input_file}", unit="rows") as pbar:
-        for row in pbar:
-            #Skip rows which already have an output
-            if not pd.isnull(df.loc[row.Index, args.output_column]): 
+    processed = 0
+    try:
+        with tqdm(total=df.shape[0], ascii=True, desc=f"processing {args.input_file}", unit="rows", position=0, leave = True) as pbar:
+            for i, row in enumerate(df.itertuples()):
+                #Skip rows which already have an output
+                if not pd.isnull(row.__getattribute__(args.output_column)):
+                    pbar.update()
+                    continue 
+                input_str = str(row.__getattribute__(args.input_column))
+                df.loc[row.Index, args.output_column] = call_llm(input_str, args.api)['response']
+                df.to_csv(args.output_file, index=False)
+                processed += 1
                 pbar.update()
-                continue 
-            input_str = row.__getattribute__(args.input_column)
-            df.loc[row.Index, args.output_column] = call_llm(input_str, args.api)['response']
-            df.to_csv(args.output_file, index=False)
-            # time.sleep(1)
-            pbar.update()
-
-
+    except KeyboardInterrupt:
+        pbar.close()
+    
     timer = pbar.format_dict["elapsed"]
-    print(f"Processed {df.shape[0]} documents in {timer:.4} seconds. ({df.shape[0]/timer:.4} documents/second)")
+    print(f"Processed {processed} documents in {timer:.4} seconds. ({processed/timer:.4} documents/second)")
     print(f"Saved results into {args.output_file}")
 
 
