@@ -87,26 +87,30 @@ Tool for processing CSV files with llm.
 ## Usage
 Help:
 ```
-$ python batch_processor.py --help
-usage: batch_processor [-h] [--api API] [-i INPUT_FILE] [-o OUTPUT_FILE] [-ic INPUT_COLUMN] [-oc OUTPUT_COLUMN]
+$ python batch_processor.py -h
+usage: batch_processor [-h] [--api API] [-i INPUT_FILE] [-o OUTPUT_FILE] [-ic INPUT_COLUMN] [-oc OUTPUT_COLUMN] [--max_new_tokens MAX_NEW_TOKENS] [--temperature TEMPERATURE]
 
 Process a csv data in api
 
 options:
   -h, --help            show this help message and exit
-  --api API             API URL
+  --api API             API URL; defaults to 'http://localhost:5000/api/generate'
   -i INPUT_FILE, --input_file INPUT_FILE
-                        input file path
+                        input file path; defaults to 'input.csv'
   -o OUTPUT_FILE, --output_file OUTPUT_FILE
-                        output file path
+                        output file path; defaults to 'output.csv'
   -ic INPUT_COLUMN, --input_column INPUT_COLUMN
-                        name of the input data column
+                        name of the input data column; defaults to 'input'
   -oc OUTPUT_COLUMN, --output_column OUTPUT_COLUMN
-                        name of the output data column
+                        name of the output data column; defaults to 'output'
+  --max_new_tokens MAX_NEW_TOKENS
+                        maximum model return size in tokens; defaults to 10
+  --temperature TEMPERATURE
+                        model output temperature between 0 and 2, defines how random is output; defaults to 1
 ```
-Each entry in an INPUT_COLUMN (default = 'input') of INPUT_FILE (default = 'input.csv') will be sent to API.
+Each entry in an INPUT_COLUMN of INPUT_FILE will be sent to API.
 
-Output file (OUTPUT_FILE, default = 'output.csv) is a copy of an input file with a new column OUTPUT_COLUMN (default = 'output') which contains API responses. 
+OUTPUT_FILE is a copy of an input file with a new column OUTPUT_COLUMN (default = 'output') which contains API responses. 
 
 If input file already has an 'output' column - only rows with empty output will be processed. Processing may be interrupted(via CTRL+C in UNIX) at any point and continued later by using an output file as an input. 
 
