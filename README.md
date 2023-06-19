@@ -16,6 +16,23 @@ chmod +x __PATH__/src/slurm/run_llm.sh
 ./usrun.sh -p A100-40GB --gpus=1 --time 08:00:00 --mem 100GB __PATH__/src/slurm/run_llm.sh vicuna7b
 ```
 
+Finding out the URL of the API or the user interface is currently a bit fiddly. On the slurm cluster, run
+
+```
+$ squeue | grep YOUR_USER_NAME
+709485_3     batch     G_w2  YOUR_USER_NAME  R   12:03:17      1 serv-9209
+```
+
+It shows a list of all your runnig slurm jobs. On the right you can see your host name. Ping it to get the IP address:
+
+```
+$ ping serv-9209
+PING serv-9209.kl.dfki.de (192.168.92.189) 56(84) bytes of data.
+64 bytes from serv-9209.kl.dfki.de (192.168.92.189): icmp_seq=1 ttl=63 time=0.137 ms
+```
+
+Here you can see your nodes IP address. The web UI and the API run on this IP address on port 5000, in the example `http://192.168.92.189:5000`.
+
 ## Installation
 
 1. Create a virtual environment, e.g. with Conda. We recommend Python 3.9.6.
