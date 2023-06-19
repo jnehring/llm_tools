@@ -7,6 +7,15 @@
   - [Usage](#usage-1)
 # LLM Tools
 
+## Starting an LLM on the DFKI Cluster
+
+Clone the repository. Use an example slurm starter skript from the [llm models table](https://docs.google.com/spreadsheets/d/1F6T_ZPiEomYrfvpy64GUmuO0CiSQ4LrZrgM4BjSLmKA/edit#gid=0). Then make the starter skript executable and execute it (replace __PATH__ with your installation directory)
+
+```
+chmod +x __PATH__/src/slurm/run_llm.sh
+./usrun.sh -p A100-40GB --gpus=1 --time 08:00:00 --mem 100GB __PATH__/src/slurm/run_llm.sh vicuna7b
+```
+
 ## Installation
 
 1. Create a virtual environment, e.g. with Conda. We recommend Python 3.9.6.
