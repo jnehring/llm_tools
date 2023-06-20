@@ -1,5 +1,6 @@
 ## Table of contents
 - [LLM Tools](#llm-tools)
+  - [Starting an LLM on the DFKI Cluster](#starting-an-llm-on-the-dfki-cluster)
   - [Installation](#installation)
   - [Usage](#usage)
 - [llm\_tools web user interface](#llm_tools-web-user-interface)
