@@ -1,12 +1,20 @@
+# LLM Tools
+
+LLM tools are
+
+... a unified interface to access LLMs, both remote (such as OpenAI models) and self-hosted (on our Slurm cluster).
+... a starter skript to easily start the models on Slurm.
+... helpers to interact with the LLMs.
+
+
 ## Table of contents
 - [LLM Tools](#llm-tools)
   - [Starting an LLM on the DFKI Cluster](#starting-an-llm-on-the-dfki-cluster)
   - [Installation](#installation)
   - [Usage](#usage)
-- [llm\_tools web user interface](#llm_tools-web-user-interface)
+- [LLM Tools web user interface](#llm-tools-web-user-interface)
 - [batch\_processor](#batch_processor)
   - [Usage](#usage-1)
-# LLM Tools
 
 ## Starting an LLM on the DFKI Cluster
 
@@ -98,7 +106,7 @@ This class will represent your LLM implementation.
 You have successfully added a new LLM to the llm_tools.
 ```
 
-# llm_tools web user interface
+## LLM Tools web user interface
 
 ```
 There is a Web user interface available to interact with llm.
@@ -109,9 +117,9 @@ The result will be displayed in the lower white box.
 ```
 ![WebUI](https://github.com/jnehring/llm_tools/assets/94236355/05a6badd-4d8f-4f8d-b6fc-b3313b6742dc)
 
-# batch_processor
+## batch_processor
 Tool for processing CSV files with llm. 
-## Usage
+### Usage
 Help:
 ```
 $ python batch_processor.py -h
