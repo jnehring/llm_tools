@@ -130,13 +130,15 @@ options:
   -oc OUTPUT_COLUMN, --output_column OUTPUT_COLUMN
                         name of the output data column; defaults to 'output'
   --max_new_tokens MAX_NEW_TOKENS
-                        maximum model return size in tokens; defaults to 10
+                        maximum model return size in tokens; defaults to 100
   --temperature TEMPERATURE
                         model output temperature between 0 and 2, defines how random is output; defaults to 1
 ```
 Each entry in an INPUT_COLUMN of INPUT_FILE will be sent to API.
 
 OUTPUT_FILE is a copy of an input file with a new column OUTPUT_COLUMN (default = 'output') which contains API responses. 
+
+Make sure to set MAX_NEW_TOKENS as needed. 100 Tokens is only 1 paragraph maximum.
 
 If input file already has an 'output' column - only rows with empty output will be processed. Processing may be interrupted(via CTRL+C in UNIX) at any point and continued later by using an output file as an input. 
 
