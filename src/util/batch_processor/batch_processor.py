@@ -9,7 +9,7 @@ def call_llm(input_str, api_url, max_new_tokens, temperature):
         'temperature': temperature,
         'max_new_tokens': max_new_tokens
     }
-    x = requests.post(api_url, json = body,params=args)
+    x = requests.post(api_url, json = body, params = args)
     return x.json()
 
 def batch_process(args):
@@ -49,7 +49,7 @@ if __name__ == "__main__":
     ap.add_argument("-o", "--output_file", default="output.csv", type=str, help = "output file path; defaults to 'output.csv'")
     ap.add_argument("-ic", "--input_column", default="input", type=str, help = "name of the input data column; defaults to 'input'")
     ap.add_argument("-oc", "--output_column", default="output", type=str, help = "name of the output data column; defaults to 'output'")
-    ap.add_argument("--max_new_tokens", type=int, default=10, help = "maximum model return size in tokens; defaults to 10")
+    ap.add_argument("--max_new_tokens", type=int, default=100, help = "maximum model return size in tokens; defaults to 100")
     ap.add_argument("--temperature", type=float, default=1., help = "model output temperature between 0 and 2, defines how random is output; defaults to 1")
 
     args = ap.parse_args()

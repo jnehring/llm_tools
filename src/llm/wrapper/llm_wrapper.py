@@ -72,10 +72,10 @@ class OpenAIDavinci(LLMWrapper):
         }
 
         if "max_new_tokens" in args.keys():
-            openai_args["max_tokens"] = args["max_new_tokens"]
+            openai_args["max_tokens"] = int(args["max_new_tokens"])
 
         if "temperature" in args.keys():
-            openai_args["temperature"] = args["temperature"]
+            openai_args["temperature"] = float(args["temperature"])
 
 
         response = openai.Completion.create(**openai_args)
