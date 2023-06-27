@@ -115,7 +115,7 @@ You can open web UI through your browser using local IP (127.0.0.1:5000).
 You can type in any text in the textbox that you want to sent to llm and press send. 
 The result will be displayed in the lower white box.
 ```
-![WebUI](https://github.com/jnehring/llm_tools/assets/94236355/05a6badd-4d8f-4f8d-b6fc-b3313b6742dc)
+![WebGUI](WebGUI.png)
 
 ## batch_processor
 Tool for processing CSV files with llm. 
