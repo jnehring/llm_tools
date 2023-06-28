@@ -7,6 +7,7 @@ import time
 import json
 
 from pathlib import Path
+from typing import Dict
 
 from fairscale.nn.model_parallel.initialize import initialize_model_parallel
 
@@ -89,13 +90,14 @@ class LLamaWrapper(LLMWrapper):
     def __init__(self):
         self.generator = init_generator()
 
-    def generate_response(self, input_str : str, max_tokens : int =10 , temperature : float = 0):
-
-        temperature = 0.8
+    def generate_response(self, input_str : str, args : Dict):
+        
+        max_gen_len = int(args["max_new_tokens"]) if "max_new_tokens" in args.keys() else 256
+        temperature = float(args["temperature"]) if "temperature" in args.keys() else 0.8
         top_p = 0.95
 
         response = self.generator.generate(
-            [input_str], max_gen_len=256, temperature=temperature, top_p=top_p
+            [input_str], max_gen_len=max_gen_len, temperature=temperature, top_p=top_p
         )[0]
         return response
 
