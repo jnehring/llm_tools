@@ -3,7 +3,9 @@
 LLM tools are
 
 ... a unified interface to access LLMs, both remote (such as OpenAI models) and self-hosted (on our Slurm cluster).
+
 ... a starter skript to easily start the models on Slurm.
+
 ... helpers to interact with the LLMs.
 
 
