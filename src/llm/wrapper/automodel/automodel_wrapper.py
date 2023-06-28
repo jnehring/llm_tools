@@ -16,8 +16,9 @@ class AutoModelWrapper(HuggingFaceLLMWrapper):
         self.model = AutoModelForCausalLM.from_pretrained(
             model_name,
             cache_dir=os.getenv("HUGGINGFACE_CACHE_DIR"),
-            trust_remote_code=trust_remote_code
-        ).cuda()
+            trust_remote_code=trust_remote_code,
+            device_map="auto"
+        )
 
         self.tokenizer = AutoTokenizer.from_pretrained(
             model_name,

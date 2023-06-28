@@ -9,8 +9,6 @@ cd "$(dirname "$0")"
 
 pip install -r ../../requirements.txt
 
-pwd
-
 model_name=$1
 
 model_type=`bash -c "jq -r '. | .$model_name.llm' models.json"`
