@@ -1,4 +1,11 @@
 {
+    "falcon7b": {
+        "llm": "automodel",
+        "huggingface_model": "tiiuae/falcon-7b",
+        "env": {
+            "TRUST_REMOTE_CODE": true
+        }
+    },
     "pythia6_9b": {
         "llm": "automodel",
         "huggingface_model": "EleutherAI/pythia-6.9b"

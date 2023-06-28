@@ -12,7 +12,8 @@ class LLMWrapper(ABC):
     def __init__(self):
         self.params = {
             "max_new_tokens": lambda x : int(x),
-            "temperature": lambda x: float(x)
+            "temperature": lambda x: float(x),
+            "skip_special_tokens": lambda x : bool(x)
         }
 
     @abstractmethod
@@ -35,12 +36,21 @@ class HuggingFaceLLMWrapper(LLMWrapper):
     def generate_response(self, input_str : str, args : Dict):
         clean_args = self.clean_args(args)
         inputs = self.tokenizer(input_str, return_tensors="pt")
+
+        # remove all arguments that the model does not accept
+        for key in list(inputs.keys()):
+            if key not in self.model.generate.__code__.co_varnames:
+                del inputs[key]
+
         for key in inputs.keys():
             inputs[key] = inputs[key].cuda()
         for key, value in clean_args.items():
             inputs[key] = value
         tokens = self.model.generate(**inputs)
-        return self.tokenizer.decode(tokens[0])
+
+        key = "skip_special_tokens"
+        skip_special_tokens = args[key] if key in args.keys() else True
+        return self.tokenizer.decode(tokens[0], skip_special_tokens=skip_special_tokens)
 
 class DummyLLM(LLMWrapper):
 
