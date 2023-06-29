@@ -16,9 +16,9 @@ class T5Wrapper(HuggingFaceLLMWrapper):
         # assert model_name in ("t5-base")
         self.tokenizer = T5Tokenizer.from_pretrained(model_name, cache_dir=cache_dir)
         if model_name in ("t5-base"):
-            self.model = T5Model.from_pretrained(model_name, cache_dir=cache_dir).cuda()
+            self.model = T5Model.from_pretrained(model_name, cache_dir=cache_dir, device_map="auto")
         elif model_name in ("google/flan-t5-large"):
-            self.model = T5ForConditionalGeneration.from_pretrained(model_name, cache_dir=cache_dir).cuda()
+            self.model = T5ForConditionalGeneration.from_pretrained(model_name, cache_dir=cache_dir, device_map="auto").cuda()
 
 
         
