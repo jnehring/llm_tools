@@ -38,9 +38,9 @@ class HuggingFaceLLMWrapper(LLMWrapper):
         inputs = self.tokenizer(input_str, return_tensors="pt")
 
         # remove all arguments that the model does not accept
-        for key in list(inputs.keys()):
-            if key not in self.model.generate.__code__.co_varnames:
-                del inputs[key]
+        # for key in list(inputs.keys()):
+        #     if key not in self.model.generate.__code__.co_varnames:
+        #         del inputs[key]
 
         for key in inputs.keys():
             inputs[key] = inputs[key].cuda()
