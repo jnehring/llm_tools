@@ -47,8 +47,15 @@ def run_console():
     if args.mode == "oneshot":
         if args.input_str is None:
             raise Exception("Parameter input_str not set")
-        response = llm.generate_response(args.input_str)
-        logging.info("Get response " + response)
+
+        response = llm.generate_response(args.input_str, {})
+
+        # example to test cond_log_prob
+        # in_str = "What color is the sky? Answer: blue\nWhat color is grass? Answer:"
+        # targets = ["red", "blue", "green"]
+        # response = llm.cond_log_prob(in_str, targets, {})
+        logging.info("Get response " + str(response))
+        print(type(response), type(response[0]))
         print(response)
     elif args.mode == "http_api":
         start_api(llm, args)

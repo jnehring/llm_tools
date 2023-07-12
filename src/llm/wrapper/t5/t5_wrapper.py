@@ -1,4 +1,4 @@
-from llm.wrapper.llm_wrapper import HuggingFaceLLMWrapper
+from llm.wrapper.huggingface_wrapper import HuggingFaceLLMWrapper
 from transformers import T5Tokenizer, T5Model, T5ForConditionalGeneration
 import os
 
@@ -15,6 +15,8 @@ class T5Wrapper(HuggingFaceLLMWrapper):
 
         # assert model_name in ("t5-base")
         self.tokenizer = T5Tokenizer.from_pretrained(model_name, cache_dir=cache_dir)
+        # self.tokenizer.padding_side = "left"
+
         if model_name in ("t5-base"):
             self.model = T5Model.from_pretrained(model_name, cache_dir=cache_dir, device_map="auto")
         elif model_name in ("google/flan-t5-large"):

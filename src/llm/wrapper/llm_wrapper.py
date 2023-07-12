@@ -4,8 +4,9 @@ import os
 import openai
 import requests
 import json
-from typing import Dict
 import logging
+from typing import List, Union, Optional, Dict
+import scipy
 
 class LLMWrapper(ABC):
 
@@ -17,8 +18,11 @@ class LLMWrapper(ABC):
         }
 
     @abstractmethod
-    def generate_response(self, input_str : str, args : Dict):
+    def generate_response(self, input_str : str, args : Dict) -> str:
         pass
+
+    def cond_log_prob(self, inputs : str, targets: List[str], args : Dict) -> List[float]:
+        raise Exception("not implemented")
 
     def clean_args(self, args):
         # remove args that are not defined in self.params
@@ -28,29 +32,6 @@ class LLMWrapper(ABC):
         args = {key: self.params[key](value) for key, value in args.items()}
         return args
 
-class HuggingFaceLLMWrapper(LLMWrapper):
-
-    def __init__(self):
-        LLMWrapper.__init__(self)
-
-    def generate_response(self, input_str : str, args : Dict):
-        clean_args = self.clean_args(args)
-        inputs = self.tokenizer(input_str, return_tensors="pt")
-
-        # remove all arguments that the model does not accept
-        for key in list(inputs.keys()):
-            if key not in self.model.generate.__code__.co_varnames:
-                del inputs[key]
-
-        for key in inputs.keys():
-            inputs[key] = inputs[key].cuda()
-        for key, value in clean_args.items():
-            inputs[key] = value
-        tokens = self.model.generate(**inputs)
-
-        key = "skip_special_tokens"
-        skip_special_tokens = args[key] if key in args.keys() else True
-        return self.tokenizer.decode(tokens[0], skip_special_tokens=skip_special_tokens)
 
 class DummyLLM(LLMWrapper):
 

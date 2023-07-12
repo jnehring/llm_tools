@@ -1,4 +1,4 @@
-from llm.wrapper.llm_wrapper import HuggingFaceLLMWrapper
+from llm.wrapper.huggingface_wrapper import HuggingFaceLLMWrapper
 from transformers import AutoModelForCausalLM, AutoTokenizer
 import os
 
