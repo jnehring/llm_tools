@@ -18,7 +18,13 @@ class LLMWrapper(ABC):
         }
 
     @abstractmethod
-    def generate_response(self, input_str : str, args : Dict) -> str:
+    def generate_response(self, 
+        input_str : str, 
+        max_new_token: int,
+        temperature: float = 1.0,
+        top_k: int = 0,
+        top_p: float = 0.9,
+    ) -> str:
         pass
 
     def cond_log_prob(self, inputs : str, targets: List[str], args : Dict) -> List[float]:
@@ -46,7 +52,7 @@ class DummyLLM(LLMWrapper):
     def generate_response(self, input_str : str, args):
         args = self.clean_args(args)
         response = np.random.choice(self.responses)
-        response += "\n\nYour input was: " + input_str + "\n, the arguments were " + str(args)
+        response += "\n\nYour input was: " + input_str 
         return response
 
 class OpenAIDavinci(LLMWrapper):

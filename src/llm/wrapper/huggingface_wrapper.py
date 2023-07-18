@@ -215,9 +215,8 @@ class HuggingFaceLLMWrapper(LLMWrapper):
         self,
         inputs: Union[str, List[str]],
         targets: Union[List[str], List[List[str]]],
-        args: dict,
         batch_size: int = 64,
-        absolute_normalization: Optional[bool] = False,
+        absolute_normalization: Optional[bool] = True,
     ) -> Union[List[float], List[List[float]]]:
         """Computes conditional log probabilities of targets given inputs.
 
@@ -260,6 +259,7 @@ class HuggingFaceLLMWrapper(LLMWrapper):
             )
             num_examples = len(flat_idx)
             flat_scores = []
+
             for idx in range(0, num_examples, batch_size):
                 batch_idx = flat_idx[idx : min(idx + batch_size, num_examples)]
                 batch_inputs = flat_inputs[idx : min(idx + batch_size, num_examples)]

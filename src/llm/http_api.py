@@ -51,24 +51,29 @@ def start_api(llm, args):
     def cond_log_prob():
         try:
             data = request.json
-            logging.info("Receive request for /api/cond_log_prob with data=" + str(data))
+            #logging.info("Receive request for /api/cond_log_prob with data=" + str(data))
 
             assert type(data) == dict
             assert "doc" in data.keys()
             assert "targets" in data.keys()
             assert type(data["doc"]) == str
+
+            if type(data["targets"]) == str:
+                data["targets"] = [data["targets"]]
+
             assert type(data["targets"]) == list
             for x in data["targets"]:
                 assert type(x) == str
 
-            response = llm.cond_log_prob(data["doc"], data["targets"], request.args)
+            response = llm.cond_log_prob(data["doc"], data["targets"])
 
             response = {
                 "input_doc": data["doc"],
+                "targets": data["targets"],
                 "cond_log_prob": response
             }
 
-            logging.info("Received conditional log probabilities: " + json.dumps(response))
+            #logging.info("Received conditional log probabilities: " + json.dumps(response))
             return jsonify(response)
 
         except Exception as e:
