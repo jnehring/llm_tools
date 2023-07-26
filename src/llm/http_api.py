@@ -2,9 +2,17 @@ import logging
 import json
 import traceback
 
+from datetime import datetime
+
 from flask import Flask, jsonify
 from flask import request, render_template
 from flask_cors import CORS, cross_origin
+
+def log_query(data):
+    f = open("querylog.txt", "a")
+    d = datetime.now().isoformat()
+    f.write(d + " " + str(data) + "\n")
+    f.close()
 
 def start_api(llm, args):
 
@@ -14,10 +22,12 @@ def start_api(llm, args):
 
     @app.route("/api/generate", methods=['POST'])
     @cross_origin()
+
     def generate():
         try:
             data = request.json
-            logging.info("Receive request for /api/generate with data=" + str(data))
+            
+            #logging.info("Receive request for /api/generate with data=" + str(data))
 
             assert type(data) == dict
             assert "doc" in data.keys()
@@ -31,6 +41,10 @@ def start_api(llm, args):
             }
 
             logging.info("Received answer: " + json.dumps(response))
+
+            if args.log_all_queries:
+                log_query(json.dumps(response))
+
             return jsonify(response)
         except Exception as e:
             e = traceback.format_exc(limit=None, chain=True)
@@ -73,7 +87,9 @@ def start_api(llm, args):
                 "cond_log_prob": response
             }
 
-            #logging.info("Received conditional log probabilities: " + json.dumps(response))
+            if args.log_all_queries:
+                log_query(json.dumps(response))
+
             return jsonify(response)
 
         except Exception as e:

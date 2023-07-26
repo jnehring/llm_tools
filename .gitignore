@@ -4,6 +4,7 @@ log.txt
 .vscode
 
 setup_env.sh
+src/querylog.txt
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
