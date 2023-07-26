@@ -72,6 +72,8 @@ def _gpt_batch_tokenize(
             attention_mask.
     """
 
+    if tokenizer.pad_token_id is None:
+        tokenizer.add_special_tokens({'pad_token': '[PAD]'})
     assert tokenizer.pad_token_id is not None, "Tokenizer must set pad_token_id."
 
     ragged_inputs_ids = tokenizer(batch_inputs)["input_ids"]
