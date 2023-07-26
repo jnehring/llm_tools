@@ -20,6 +20,7 @@ class Application:
             parser.add_argument('--log_level', default="warning", choices=["info", "warning"])
             parser.add_argument('--api_url', type=str)
             parser.add_argument('--port', type=int, default=5000)
+            parser.add_argument('--log_all_queries', action="store_true", help="log all queries to queries.txt")
             
             self.args = parser.parse_args()
         return self.args
