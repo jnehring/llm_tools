@@ -78,7 +78,6 @@ def _gpt_batch_tokenize(
 
     if batch_targets:
         assert len(batch_inputs) == len(batch_targets), "Inputs and targets must have the same length."
-        print(batch_targets)
         ragged_targets_ids = tokenizer(batch_targets)["input_ids"]
     else:
         ragged_targets_ids = [[] for _ in batch_inputs]
@@ -134,7 +133,7 @@ class HuggingFaceLLMWrapper(LLMWrapper):
             else:
                 input_list = inputs
 
-            inputs = self.generate_inputs(input_list, args)
+            inputs = self.generate_inputs(input_list)
             clean_args = self.clean_args(args)
             
             clean_args["input_ids"] = torch.tensor(inputs["inputs_and_targets_ids"]).to(self.model.device)
