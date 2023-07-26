@@ -32,6 +32,10 @@
         "llm": "t5",
         "huggingface_model": "google/flan-t5-large"
     },
+    "flan_t5_xxl": {
+        "llm": "t5",
+        "huggingface_model": "google/flan-t5-xxl"
+    },
     "t5_base": {
         "llm": "t5",
         "huggingface_model": "t5-base"
