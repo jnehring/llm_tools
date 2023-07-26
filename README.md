@@ -30,7 +30,7 @@ chmod +x __PATH__/src/slurm/run_llm.sh
 Finding out the URL of the API or the user interface is currently a bit fiddly. On the slurm cluster, run
 
 ```
-$ squeue | grep YOUR_USER_NAME
+$ squeue |grep YOUR_USER_NAME
 709485_3     batch     G_w2  YOUR_USER_NAME  R   12:03:17      1 serv-9209
 ```
 
