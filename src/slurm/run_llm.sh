@@ -11,7 +11,7 @@ pip install -r ../../requirements.txt
 
 model_name=$1
 
-model_type=`bash -c "jq -r '. | .$model_name.llm' models.json"`
+model_type=`bash -c "jq -r '. | .$model_name.wrapper' models.json"`
 
 # set environment variables of model
 values=$(jq -r " . | .$model_name.env " models.json)

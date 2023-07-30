@@ -1,6 +1,6 @@
 {
     "falcon7b": {
-        "llm": "automodel",
+        "wrapper": "automodel",
         "model": "tiiuae/falcon-7b",
         "env": {
             "TRUST_REMOTE_CODE": true
