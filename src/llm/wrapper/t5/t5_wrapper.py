@@ -7,11 +7,11 @@ class T5Wrapper(HuggingFaceLLMWrapper):
     def __init__(self, app):
         HuggingFaceLLMWrapper.__init__(self)
 
-        assert app.get_args().huggingface_model is not None
+        assert app.get_args().model is not None
 
         cache_dir = os.getenv("HUGGINGFACE_CACHE_DIR")
 
-        model_name= app.get_args().huggingface_model
+        model_name= app.get_args().model
 
         # assert model_name in ("t5-base")
         self.tokenizer = T5Tokenizer.from_pretrained(model_name, cache_dir=cache_dir)

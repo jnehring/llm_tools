@@ -23,23 +23,23 @@ echo "Loading model with type $model_type"
 
 if [ $model_type = "llama" ]; then
     pip install -r llm/wrapper/llama/requirements.txt
-    python3 -m llm.run --llm llama
+    python3 -m llm.run --wrapper llama
 
 elif [ "$model_type" = "automodel" ]; then
     pip install -r llm/wrapper/automodel/requirements.txt
-    huggingface_model=`bash -c "jq -r '. | .$model_name.huggingface_model' slurm/models.json"`
-    echo "starting automodel with huggingface_model=$huggingface_model"
-    bash -c "python3 -m llm.run --llm automodel --huggingface_model $huggingface_model"
+    model=`bash -c "jq -r '. | .$model_name.model' slurm/models.json"`
+    echo "starting automodel with model=$model"
+    bash -c "python3 -m llm.run --wrapper automodel --model $model"
 
 elif [ "$model_type" = "t5" ]; then
     pip install -r llm/wrapper/t5/requirements.txt
-    huggingface_model=`bash -c "jq -r '. | .$model_name.huggingface_model' slurm/models.json"`
-    echo "starting t5 with huggingface_model=$huggingface_model"
-    bash -c "python3 -m llm.run --llm t5 --huggingface_model $huggingface_model"
+    model=`bash -c "jq -r '. | .$model_name.model' slurm/models.json"`
+    echo "starting t5 with model=$model"
+    bash -c "python3 -m llm.run --wrapper t5 --model $model"
 
 elif [ "$model_type" = "vicuna" ]; then
     pip install -r llm/wrapper/vicuna/requirements.txt
-    python3 -m llm.run --llm vicuna
+    python3 -m llm.run --wrapper vicuna
 
 else
     echo "cannot find configuration for model $model_type"

@@ -1,6 +1,7 @@
 import logging
 import json
 import traceback
+import sys
 
 from datetime import datetime
 
@@ -22,17 +23,20 @@ def start_api(llm, args):
 
     @app.route("/api/generate", methods=['POST'])
     @cross_origin()
-
     def generate():
         try:
+            print("welcome to generate", file=sys.stderr)
             data = request.json
             
-            #logging.info("Receive request for /api/generate with data=" + str(data))
+            logging.info("Receive request for /api/generate with data=" + str(data))
 
+            print("welcome to generate", file=sys.stderr)
             assert type(data) == dict
             assert "doc" in data.keys()
             assert type(data["doc"]) == str
 
+            #print("response from", llm, file=sys.stderr)
+            print("arguments are  ", request.args)
             response = llm.generate_response(data["doc"], request.args)
 
             response = {
@@ -110,4 +114,4 @@ def start_api(llm, args):
     def index():
         return render_template("index.html")
 
-    app.run(debug=True, host="0.0.0.0", port=args.port, use_reloader=False)
+    app.run(debug=True, host="0.0.0.0", port=args.port, use_reloader=True)

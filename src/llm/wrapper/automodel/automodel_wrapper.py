@@ -7,9 +7,9 @@ class AutoModelWrapper(HuggingFaceLLMWrapper):
     def __init__(self, app):
         HuggingFaceLLMWrapper.__init__(self)
 
-        assert app.get_args().huggingface_model is not None
+        assert app.get_args().model is not None
 
-        model_name= app.get_args().huggingface_model
+        model_name= app.get_args().model
 
         trust_remote_code = os.getenv("TRUST_REMOTE_CODE", default=False)
 

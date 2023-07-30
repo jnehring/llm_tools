@@ -13,8 +13,8 @@ class Application:
 
         if self.args is None:
             parser = argparse.ArgumentParser(prog="LLM Tools")
-            parser.add_argument('--llm', type=str, required=True, help="Specify which LLM you want to load.")
-            parser.add_argument('--huggingface_model', type=str, required=False, help="When llm=transformers, specify the huggingface model here.")
+            parser.add_argument('--wrapper', type=str, required=True, help="Specify which LLM you want to load.")
+            parser.add_argument('--model', type=str, required=False, help="Specify the model here.")
             parser.add_argument('--input_str', type=str, help="Specify input document. For mode=oneshot.")
             parser.add_argument('--mode', default="http_api", choices=["http_api", "oneshot"])
             parser.add_argument('--log_level', default="warning", choices=["info", "warning"])
@@ -38,12 +38,13 @@ def run_console():
     args = app.get_args()
     app.init_logging(args)
 
-    logging.info("loading llm " + args.llm)
+    logging.info("loading llm " + args.wrapper)
 
-    if args.llm not in llm_registry.get_llms():
-        raise Exception("Unknown LLM " + args.llm)
+    if args.wrapper not in llm_registry.get_llms():
+        raise Exception("Unknown LLM " + args.wrapper)
     
-    llm = llm_registry.load_llm(app, args.llm)
+    llm = llm_registry.load_llm(app, args.wrapper)
+    print("llm is", llm)
 
     if args.mode == "oneshot":
         if args.input_str is None:

@@ -57,14 +57,15 @@ class DummyLLM(LLMWrapper):
 
 class OpenAIDavinci(LLMWrapper):
 
-    def __init__(self):
+    def __init__(self, app):
         LLMWrapper.__init__(self)
+        self.model = app.get_args().model
 
     def generate_response(self, input_str : str, args):
         openai.api_key = os.getenv("OPENAI_API_KEY")
 
         openai_args = {
-            "model": "text-davinci-003",
+            "model": self.model,
             "prompt": input_str,
         }
 
