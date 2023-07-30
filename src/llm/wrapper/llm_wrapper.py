@@ -30,7 +30,7 @@ class LLMWrapper(ABC):
     def cond_log_prob(self, inputs : str, targets: List[str], args : Dict) -> List[float]:
         raise Exception("not implemented")
     
-    def single_cond_log_prob(self, input : str, target: str, args : Dict) -> float:
+    def single_cond_log_prob(self, input : str, target: str) -> float:
         raise Exception("not implemented")
 
     def clean_args(self, args):
