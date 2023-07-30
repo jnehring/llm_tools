@@ -75,14 +75,11 @@ def start_api(llm, args):
             if type(data["targets"]) == str:
                 data["targets"] = [data["targets"]]
 
-            #assert type(data["targets"]) == str
             assert type(data["targets"]) == list
             for x in data["targets"]:
                 assert type(x) == str
 
             response = llm.cond_log_prob(data["doc"], data["targets"])
-            #response = llm.score(data["doc"], data["targets"])
-            #print("The response log prob", response)
 
             response = {
                 "input_doc": data["doc"],
@@ -123,7 +120,6 @@ def start_api(llm, args):
             assert type(data["targets"]) == str
 
             response = llm.single_cond_log_prob(data["doc"], data["targets"], request.args)
-            #print("The response log prob", response)
 
             response = {
                 "input_doc": data["doc"],
