@@ -75,11 +75,14 @@ def start_api(llm, args):
             if type(data["targets"]) == str:
                 data["targets"] = [data["targets"]]
 
+            #assert type(data["targets"]) == str
             assert type(data["targets"]) == list
             for x in data["targets"]:
                 assert type(x) == str
 
             response = llm.cond_log_prob(data["doc"], data["targets"])
+            #response = llm.score(data["doc"], data["targets"])
+            #print("The response log prob", response)
 
             response = {
                 "input_doc": data["doc"],
@@ -95,6 +98,44 @@ def start_api(llm, args):
         except Exception as e:
             e = traceback.format_exc(limit=None, chain=True)
             msg = "Exception from /api/generate\n"
+            msg += traceback.format_exc(limit=None, chain=True) + "\n"
+            msg += json.dumps(data, indent=4)
+            msg += "----------------"
+            logging.error(msg)
+
+            response = {
+                "status": "error",
+                "exception": traceback.format_exc(limit=None, chain=True),
+            }
+            return jsonify(response), 500
+        
+    @app.route("/api/single_cond_log_prob", methods=['POST'])
+    @cross_origin()
+    def single_cond_log_prob():
+        try:
+            data = request.json
+            logging.info("Receive request for /api/single_cond_log_prob with data=" + str(data))
+
+            assert type(data) == dict
+            assert "doc" in data.keys()
+            assert "targets" in data.keys()
+            assert type(data["doc"]) == str
+            assert type(data["targets"]) == str
+
+            response = llm.single_cond_log_prob(data["doc"], data["targets"], request.args)
+            #print("The response log prob", response)
+
+            response = {
+                "input_doc": data["doc"],
+                "single_cond_log_prob": response
+            }
+
+            logging.info("Received single conditional log probabilities: " + json.dumps(response))
+            return jsonify(response)
+
+        except Exception as e:
+            e = traceback.format_exc(limit=None, chain=True)
+            msg = "Exception from /api/single_cond_log_prob\n"
             msg += traceback.format_exc(limit=None, chain=True) + "\n"
             msg += json.dumps(data, indent=4)
             msg += "----------------"

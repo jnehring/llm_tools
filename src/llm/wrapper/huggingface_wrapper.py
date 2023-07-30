@@ -193,7 +193,17 @@ class HuggingFaceLLMWrapper(LLMWrapper):
             attention_mask=attention_mask,
         ).logits
 
-        return self.compute_loss(targets_ids.cpu().detach().numpy(), logits.cpu().detach().numpy())
+        #print("input ", input_list)
+        #print("output ", target_list)
+        #print("inputs and targets ", inputs_and_targets_ids)
+        #print("targets ", targets_ids)
+        #print("attention mask ", attention_mask)
+        #print("position id ", position_ids)
+
+        s = self.compute_loss(targets_ids.cpu().detach().numpy(), logits.cpu().detach().numpy())
+        #print("score is", s)
+        return s
+        #return self.compute_loss(targets_ids.cpu().detach().numpy(), logits.cpu().detach().numpy())
 
     def compute_loss(self, labels: np.array, logits: np.array):
         loss_fn = tf.keras.losses.SparseCategoricalCrossentropy(
@@ -212,6 +222,9 @@ class HuggingFaceLLMWrapper(LLMWrapper):
         reduced_masked_loss = tf.reduce_sum(masked_loss, axis=1)
         return (-reduced_masked_loss).numpy().tolist()
 
+    def single_cond_log_prob(self, input : str, target: str, args : Dict) -> float:
+        return self.score(input, target)[0]
+    
     def cond_log_prob(
         self,
         inputs: Union[str, List[str]],
@@ -255,6 +268,12 @@ class HuggingFaceLLMWrapper(LLMWrapper):
                 input_list = inputs
                 target_list = targets
 
+            #print("Input is ", input_list)
+            # print("Input type is ", type(input_list))
+
+            #print("Target is ", target_list)
+            # print("Target type is ", type(target_list))
+
             flat_idx, flat_inputs, flat_choices = self.flatten_multiple_choice_examples(
                 inputs=input_list, targets=target_list
             )
@@ -270,6 +289,17 @@ class HuggingFaceLLMWrapper(LLMWrapper):
                 flat_scores += batch_scores
 
             scores = [[] for _ in range(len(input_list))]
+
+            # print("flat_idx", flat_idx)
+            # print("flat_inputs", flat_inputs)
+            # print("flat_choices", flat_choices)
+            # print("num_examples are", num_examples)
+            # #print("len of num_examples are", len(num_examples))
+            # print("flat_scores is", flat_scores)
+            # print("len of flat_scores", len(flat_scores))
+
+            # print("score list size is", len(scores))
+            # print("score list is", scores)
 
             for idx, score in zip(flat_idx, flat_scores):
                 if score == 0:
@@ -287,6 +317,7 @@ class HuggingFaceLLMWrapper(LLMWrapper):
                     for score_row in scores
                 ]
 
+            #print(" scores are ", scores)
             if isinstance(inputs, str):
                 scores = scores[0]
 
