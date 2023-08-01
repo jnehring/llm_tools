@@ -1,4 +1,4 @@
-import argparse
+import configargparse
 import logging
 
 from llm import llm_registry
@@ -12,14 +12,14 @@ class Application:
     def get_args(self):
 
         if self.args is None:
-            parser = argparse.ArgumentParser(prog="LLM Tools")
+            parser = configargparse.ArgumentParser(prog="LLM Tools")
             parser.add_argument('--llm', type=str, required=True, help="Specify which LLM you want to load.")
             parser.add_argument('--huggingface_model', type=str, required=False, help="When llm=transformers, specify the huggingface model here.")
             parser.add_argument('--input_str', type=str, help="Specify input document. For mode=oneshot.")
             parser.add_argument('--mode', default="http_api", choices=["http_api", "oneshot"])
             parser.add_argument('--log_level', default="warning", choices=["info", "warning"])
             parser.add_argument('--api_url', type=str)
-            parser.add_argument('--port', type=int, default=5000)
+            parser.add_argument('--port', type=int, default=5000, env_var='LLM_TOOLS_PORT')
             parser.add_argument('--log_all_queries', action="store_true", help="log all queries to queries.txt")
             
             self.args = parser.parse_args()
