@@ -104,6 +104,43 @@ def start_api(llm, args):
                 "exception": traceback.format_exc(limit=None, chain=True),
             }
             return jsonify(response), 500
+        
+    @app.route("/api/single_cond_log_prob", methods=['POST'])
+    @cross_origin()
+    def single_cond_log_prob():
+        try:
+            data = request.json
+            logging.info("Receive request for /api/single_cond_log_prob with data=" + str(data))
+
+            assert type(data) == dict
+            assert "doc" in data.keys()
+            assert "targets" in data.keys()
+            assert type(data["doc"]) == str
+            assert type(data["targets"]) == str
+
+            response = llm.single_cond_log_prob(data["doc"], data["targets"], request.args)
+
+            response = {
+                "input_doc": data["doc"],
+                "single_cond_log_prob": response
+            }
+
+            logging.info("Received single conditional log probabilities: " + json.dumps(response))
+            return jsonify(response)
+
+        except Exception as e:
+            e = traceback.format_exc(limit=None, chain=True)
+            msg = "Exception from /api/single_cond_log_prob\n"
+            msg += traceback.format_exc(limit=None, chain=True) + "\n"
+            msg += json.dumps(data, indent=4)
+            msg += "----------------"
+            logging.error(msg)
+
+            response = {
+                "status": "error",
+                "exception": traceback.format_exc(limit=None, chain=True),
+            }
+            return jsonify(response), 500
 
     @app.route("/", methods=['GET'])
     def index():

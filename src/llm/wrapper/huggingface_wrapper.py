@@ -212,6 +212,9 @@ class HuggingFaceLLMWrapper(LLMWrapper):
         reduced_masked_loss = tf.reduce_sum(masked_loss, axis=1)
         return (-reduced_masked_loss).numpy().tolist()
 
+    def single_cond_log_prob(self, input : str, target: str) -> float:
+        return self.score(input, target)[0]
+    
     def cond_log_prob(
         self,
         inputs: Union[str, List[str]],
