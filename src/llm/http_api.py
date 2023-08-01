@@ -22,7 +22,6 @@ def start_api(llm, args):
 
     @app.route("/api/generate", methods=['POST'])
     @cross_origin()
-
     def generate():
         try:
             data = request.json

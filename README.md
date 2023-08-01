@@ -57,11 +57,11 @@ You can start the command line tool to do a oneshot interaction with the LLM. Or
 
 ```
 $ python3 -m llm.run --help
-usage: LLM Tools [-h] --llm LLM [--input_str INPUT_STR] [--mode {http_api,oneshot}]
+usage: LLM Tools [-h] --wrapper LLM [--input_str INPUT_STR] [--mode {http_api,oneshot}]
 
 optional arguments:
   -h, --help            show this help message and exit
-  --llm LLM             Specify which LLM you want to load.
+  --wrapper LLM             Specify which LLM you want to load.
   --input_str INPUT_STR
                         Specify input document. For mode=oneshot.
   --mode {http_api,oneshot}
@@ -70,13 +70,13 @@ optional arguments:
 **One shot interaction with the Dummy LLM**
 
 ```
-python3 -m llm.run --llm dummy_llm --mode oneshot --input_str="hallo"
+python3 -m llm.run --wrapper dummy_llm --mode oneshot --input_str="hallo"
 ```
 
 **Start the HTTP API with the Dummy LLM** 
 
 ```
-python3 -m llm.run --mode http_api --llm dummy_llm
+python3 -m llm.run --mode http_api --wrapper dummy_llm
 ```
 
 Send a post request to the Dummy LLM:
@@ -88,14 +88,14 @@ curl -X POST -d '{"doc": "hello world"}'  -H "Content-Type: application/json" ht
 Call the dummy LLM from a remote LLM:
 
 ```
-python3 -m llm.run --llm http --mode oneshot --input_str="hallo" --api_url "http://localhost:5000/api/generate"
+python3 -m llm.run --wrapper http --mode oneshot --input_str="hallo" --api_url "http://localhost:5000/api/generate"
 ```
 
 **HTTP API interaction with OpenAI Davinci**
 
 ```
 export OPENAI_API_KEY=...
-python3 -m llm.run --llm openai_davinci --mode http_api
+python3 -m llm.run --wrapper openai_davinci --model text-davinci-003 --mode http_api
 ```
 
 **Adding a new LLM to llm_tools**

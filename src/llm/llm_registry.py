@@ -22,7 +22,7 @@ def init_remote_http_llm(app):
     return RemoteHTTPLLM(app.get_args().api_url)
 
 llm_registry = {
-    "openai_davinci": lambda app : OpenAIDavinci(),
+    "openai_davinci": lambda app : OpenAIDavinci(app),
     "dummy_llm": lambda app : DummyLLM(),
     "llama": lambda app : load_llama("7B"),
     "automodel": lambda app : load_automodel(app),

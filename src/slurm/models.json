@@ -1,47 +1,47 @@
 {
     "falcon7b": {
-        "llm": "automodel",
-        "huggingface_model": "tiiuae/falcon-7b",
+        "wrapper": "automodel",
+        "model": "tiiuae/falcon-7b",
         "env": {
             "TRUST_REMOTE_CODE": true
         }
     },
     "pythia6_9b": {
-        "llm": "automodel",
-        "huggingface_model": "EleutherAI/pythia-6.9b"
+        "wrapper": "automodel",
+        "model": "EleutherAI/pythia-6.9b"
     },
     "pythia12b": {
-        "llm": "automodel",
-        "huggingface_model": "EleutherAI/pythia-12b"
+        "wrapper": "automodel",
+        "model": "EleutherAI/pythia-12b"
     },
     "vicuna13b": {
-        "llm": "vicuna",
+        "wrapper": "vicuna",
         "env": {
             "MODEL_PATH": "/ds/models/llms/vicuna/13B",
             "LLAMA_TOKENIZER_PATH": "/ds/models/llms/llama/tokenizer.model"
         } 
     },
     "vicuna7b": {
-        "llm": "vicuna",
+        "wrapper": "vicuna",
         "env": {
             "MODEL_PATH": "/ds/models/llms/vicuna/7B",
             "LLAMA_TOKENIZER_PATH": "/ds/models/llms/llama/tokenizer.model"
         } 
     },
     "flan_t5_large": {
-        "llm": "t5",
-        "huggingface_model": "google/flan-t5-large"
+        "wrapper": "t5",
+        "model": "google/flan-t5-large"
     },
     "flan_t5_xxl": {
-        "llm": "t5",
-        "huggingface_model": "google/flan-t5-xxl"
+        "wrapper": "t5",
+        "model": "google/flan-t5-xxl"
     },
     "t5_base": {
-        "llm": "t5",
-        "huggingface_model": "t5-base"
+        "wrapper": "t5",
+        "model": "t5-base"
     },
     "llama7b": {
-        "llm": "llama",
+        "wrapper": "llama",
         "env": {
             "LLAMA_CHECKPOINT_DIR": "/ds/models/llms/llama/7B/",
             "LLAMA_TOKENIZER_PATH": "/ds/models/llms/llama/tokenizer.model",
@@ -50,7 +50,7 @@
         } 
     },
     "llama13b": {
-        "llm": "llama",
+        "wrapper": "llama",
         "env": {
             "LLAMA_CHECKPOINT_DIR": "/ds/models/llms/llama/13B/",
             "LLAMA_TOKENIZER_PATH": "/ds/models/llms/llama/tokenizer.model",
