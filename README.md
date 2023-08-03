@@ -95,7 +95,7 @@ python3 -m llm.run --wrapper http --mode oneshot --input_str="hallo" --api_url "
 
 ```
 export OPENAI_API_KEY=...
-python3 -m llm.run --wrapper openai_davinci --model text-davinci-003 --mode http_api
+python3 -m llm.run --wrapper openai --model text-davinci-003 --mode http_api
 ```
 
 **Adding a new LLM to llm_tools**
