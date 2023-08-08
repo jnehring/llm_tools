@@ -1,4 +1,4 @@
-from llm.wrapper.llm_wrapper import LLMWrapper, DummyLLM, OpenAIDavinci, RemoteHTTPLLM, OPENGPTX
+from llm.wrapper.llm_wrapper import LLMWrapper, DummyLLM, RemoteHTTPLLM, OPENGPTX, OpenAICompletion, OpenAIChatCompletion
 
 def load_llama(size):
     from llm.wrapper.llama.llama_wrapper import LLamaWrapper
@@ -21,8 +21,18 @@ def init_remote_http_llm(app):
         raise Exception("--url parameter not set.")
     return RemoteHTTPLLM(app.get_args().api_url)
 
+# https://platform.openai.com/docs/models/model-endpoint-compatibility
+# Can add more models in the list based on endpoint api
+def load_openai(app):
+    if app.get_args().model in ["text-davinci-003"]: 
+        return OpenAICompletion(app)
+    elif app.get_args().model in ["gpt-3.5-turbo", "gpt-3.5-turbo-16k"]:
+        return OpenAIChatCompletion(app)
+    else:
+        raise Exception("Please mention supported model")
+
 llm_registry = {
-    "openai_davinci": lambda app : OpenAIDavinci(app),
+    "openai": lambda app: load_openai(app),
     "dummy_llm": lambda app : DummyLLM(),
     "llama": lambda app : load_llama("7B"),
     "automodel": lambda app : load_automodel(app),

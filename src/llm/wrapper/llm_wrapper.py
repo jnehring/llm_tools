@@ -58,29 +58,52 @@ class DummyLLM(LLMWrapper):
         response += "\n\nYour input was: " + input_str 
         return response
 
-class OpenAIDavinci(LLMWrapper):
-
+class OpenAIBase(LLMWrapper):
+     
     def __init__(self, app):
         LLMWrapper.__init__(self)
         self.model = app.get_args().model
 
-    def generate_response(self, input_str : str, args):
+    def set_openai_args(self, args):
         openai.api_key = os.getenv("OPENAI_API_KEY")
 
         openai_args = {
-            "model": self.model,
-            "prompt": input_str,
-        }
-
+                "model": self.model
+            }
+        
         if "max_new_tokens" in args.keys():
             openai_args["max_tokens"] = int(args["max_new_tokens"])
 
         if "temperature" in args.keys():
             openai_args["temperature"] = float(args["temperature"])
 
+        return openai_args
+
+class OpenAICompletion(OpenAIBase):
+
+    def __init__(self, app):
+        OpenAIBase.__init__(self, app)
+
+    def generate_response(self, input_str : str, args):
+        
+        openai_args = self.set_openai_args(args)
+        openai_args["prompt"] = input_str
 
         response = openai.Completion.create(**openai_args)
         return response["choices"][0]["text"]
+
+class OpenAIChatCompletion(OpenAIBase):
+
+    def __init__(self, app):
+        OpenAIBase.__init__(self, app)
+
+    def generate_response(self, input_str : str, args):
+
+        openai_args = self.set_openai_args(args)
+        openai_args["messages"] = [ {'role': 'user', 'content': input_str} ]
+
+        response = openai.ChatCompletion.create(**openai_args)
+        return response["choices"][0]['message']['content']
 
 class RemoteHTTPLLM(LLMWrapper):
 
