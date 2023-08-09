@@ -118,7 +118,7 @@ def start_api(llm, args):
             assert type(data["doc"]) == str
             assert type(data["targets"]) == str
 
-            response = llm.single_cond_log_prob(data["doc"], data["targets"], request.args)
+            response = llm.single_cond_log_prob(data["doc"], data["targets"])
 
             response = {
                 "input_doc": data["doc"],
