@@ -1,7 +1,28 @@
 {
+    "falcon7b_instruct": {
+        "wrapper": "automodel",
+        "model": "tiiuae/falcon-7b-instruct",
+        "env": {
+            "TRUST_REMOTE_CODE": true
+        }
+    },    
     "falcon7b": {
         "wrapper": "automodel",
         "model": "tiiuae/falcon-7b",
+        "env": {
+            "TRUST_REMOTE_CODE": true
+        }
+    },    
+    "falcon40b_instruct": {
+        "wrapper": "automodel",
+        "model": "tiiuae/falcon-40b-instruct",
+        "env": {
+            "TRUST_REMOTE_CODE": true
+        }
+    },    
+    "falcon40b": {
+        "wrapper": "automodel",
+        "model": "tiiuae/falcon-40b",
         "env": {
             "TRUST_REMOTE_CODE": true
         }

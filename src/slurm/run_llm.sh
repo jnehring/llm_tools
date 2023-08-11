@@ -21,7 +21,7 @@ cd ..
 
 echo "Loading model with type $model_type"
 
-if [ $model_type = "llama" ]; then
+if [ "$model_type" = "llama" ]; then
     pip install -r llm/wrapper/llama/requirements.txt
     python3 -m llm.run --wrapper llama
 
