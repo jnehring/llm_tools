@@ -13,9 +13,7 @@ class T5Wrapper(HuggingFaceLLMWrapper):
 
         model_name= app.get_args().model
 
-        # assert model_name in ("t5-base")
         self.tokenizer = T5Tokenizer.from_pretrained(model_name, cache_dir=cache_dir)
-        # self.tokenizer.padding_side = "left"
 
         google_prefix = "google/flan-t5"
 
@@ -23,7 +21,8 @@ class T5Wrapper(HuggingFaceLLMWrapper):
             self.model = T5Model.from_pretrained(model_name, cache_dir=cache_dir, device_map="auto")
         elif model_name in ("google/flan-t5-base", "google/flan-t5-large", "google/flan-t5-xl", "google/flan-t5-xxl"):
             self.model = T5ForConditionalGeneration.from_pretrained(model_name, cache_dir=cache_dir, device_map="auto")
-
+        else:
+            raise Exception(f"model \"{model_name}\" not supported")
 
         
 

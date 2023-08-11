@@ -1,12 +1,17 @@
 import logging
 import json
 import traceback
-
+import os
 from datetime import datetime
+import socket
 
 from flask import Flask, jsonify
 from flask import request, render_template
 from flask_cors import CORS, cross_origin
+
+def is_port_in_use(port: int) -> bool:
+    with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
+        return s.connect_ex(('localhost', port)) == 0
 
 def log_query(data):
     f = open("querylog.txt", "a")
@@ -146,4 +151,14 @@ def start_api(llm, args):
     def index():
         return render_template("index.html")
 
-    app.run(debug=True, host="0.0.0.0", port=args.port, use_reloader=False)
+    port = args.port
+    while is_port_in_use(port):
+        logging.info(f"port {port} is in use, trying port {port+1}")
+        port = port+1
+        print(port)
+
+    f = open("/tmp/llm_tools_port.txt", "w")
+    f.write(str(port))
+    f.close()
+
+    app.run(debug=True, host="0.0.0.0", port=port, use_reloader=False)

@@ -16,7 +16,6 @@ class Application:
             parser = configargparse.ArgumentParser(prog="LLM Tools")
             parser.add_argument('--wrapper', type=str, required=True, help="Specify which LLM you want to load.")
             parser.add_argument('--model', type=str, required=False, help="Specify the model here.")
-
             parser.add_argument('--input_str', type=str, help="Specify input document. For mode=oneshot.")
             parser.add_argument('--mode', default="http_api", choices=["http_api", "oneshot"])
             parser.add_argument('--log_level', default="warning", choices=["info", "warning"])
@@ -53,11 +52,6 @@ def run_console():
             raise Exception("Parameter input_str not set")
 
         response = llm.generate_response(args.input_str, {})
-
-        # example to test cond_log_prob
-        # in_str = "What color is the sky? Answer: blue\nWhat color is grass? Answer:"
-        # targets = ["red", "blue", "green"]
-        # response = llm.cond_log_prob(in_str, targets, {})
         logging.info("Get response " + str(response))
         print(type(response), type(response[0]))
         print(response)
