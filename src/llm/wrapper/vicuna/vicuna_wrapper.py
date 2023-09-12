@@ -11,4 +11,3 @@ class VicunaWrapper(HuggingFaceLLMWrapper):
             device_map="auto"
         )
         self.tokenizer = LlamaTokenizer.from_pretrained(os.getenv("LLAMA_TOKENIZER_PATH"))
-        self.tokenizer.pad_token = self.tokenizer.eos_token

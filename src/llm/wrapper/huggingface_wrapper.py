@@ -139,11 +139,16 @@ class HuggingFaceLLMWrapper(LLMWrapper):
             clean_args = self.clean_args(args)
             
             clean_args["input_ids"] = torch.tensor(inputs["inputs_and_targets_ids"]).to(self.model.device)
+            clean_args["attention_mask"] = torch.tensor(inputs["attention_mask"]).to(self.model.device)
             tokens = self.model.generate(**clean_args)
 
             key = "skip_special_tokens"
             skip_special_tokens = args[key] if key in args.keys() else True
-            return self.tokenizer.decode(tokens[0], skip_special_tokens=skip_special_tokens)
+            text = self.tokenizer.decode(tokens[0], skip_special_tokens=skip_special_tokens)
+            
+            # remove prompt
+            text = text[len(input_list[0]) :]
+            return text
     
     def score(
         self,
